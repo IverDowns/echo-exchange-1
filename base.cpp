@@ -35,7 +35,7 @@ void login() {
     cout << "Bienvenido" << endl;
     cout << "Ingrese su tipo de cuenta:\t";
     cin >> opt;
-
+    cout << "Aqui identifica 1. admin  2. cliente....";
     do
     {
         switch (opt)
