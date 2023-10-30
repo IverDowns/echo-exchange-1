@@ -1,8 +1,38 @@
 #include <iostream>
-#include <string>
+#include <stdio.h>
+#include <string.h>
+#include <cstdlib>
+#include <cstring>
 #include "data.h"
 using namespace std;
 
+//LOG
+void login();
+void log_clt();
+void log_adm();
+bool verification_clt();
+bool verification_adm();
+
+//menus
+void searchMclt();  //menu de busqueda de cliente
+
+//CRUD clientes
+//create
+void addClt();
+void initClt(int cltPos);
+//read
+void showClt()
+void searchCltname(char client_name[]);
+void searchCltlstname(int client_lstName[]);
+int searchCltId(int client_id);
+void searchCltmail(char client_mail[]);
+int searchCltelf(char client_telf[]);
+//uptade
+void uptdClt();
+//delete
+void delClt();
+
+//funciones 
 void admin();
 void clientS();
 void regPurchase();
@@ -12,212 +42,135 @@ void redeem();
 void checkPts();
 void record();
 
-//CRUD
-void createClt();
-void readClt();
-void uptdClt();
-void delClt();
-
-//LOG
-void login();
-void log_clt();
-void log_adm();
-bool verification_clt();
-bool verification_adm();
-
-// LogIn-start
-int user;
-char pass;
-
-void login() {
-    int opt;
-
-    cout << "Bienvenido" << endl;
-    cout << "Ingrese su tipo de cuenta:\t";
-    cin >> opt;
-    cout << "Aqui identifica 1. admin  2. cliente....";
-    do
-    {
-        switch (opt)
+void searchMclt()
+{
+    int options, pos;
+    char enteredClt_name[20];
+    char enteredClt_lstName[20];
+    int enteredClt_id;
+    char enteredClt_mail[50];
+    char enteredClt_telf[15];
+    
+    do{
+        system("cls || clear");
+        cout <<"** Menu de busqueda **"<<endl;
+        cout <<"1. Nombre."<<endl;
+        cout <<"2. Apellido."<<endl;
+        cout <<"3. Id."<<endl;
+        cout <<"4. E-mail."<<endl;
+        cout <<"5. Telefono."<<endl;
+        cout <<"6. Mostrar todos los registros."<<endl;
+        cout <<"7. Cerrar Sesion."<<endl;
+        cout <<"Seleccione una opcion: ";
+        cin >> options;
+        
+        switch (options)
         {
         case 1:
-            log_adm();
-            system("pause");
-            break;
-        case 2:
-            log_clt();
-            system("pause");
-            break;
-        default:
-            cout << "Ingrese un n* valido. 1-2..." << endl;
-            break;
+            system("cls || clear");
+            cout <<"Buscar por nombre de Cliente"<<endl;
+            cout <<"Nombre a buscar: ";
+            scanf(" , enteredClt_name");
+            pos = searchCltname(enteredClt_name);
+            if (pos != -1)
+            {
+                sh
+            }
         }
-    } while (opt != 2);
-    
-}
-
-void log_clt()
-{
-    int intentos = 3;
-
-    cout << "---Cliente---" << endl;
-    cout << "-------------" << endl;
-    
-    while (intentos > 0) {
-      cout << "\nUsuario: ";
-      cin >> user;
-      cout << "\nContrasena: ";
-      cin >> pass;
-
-
-      if(verification_clt()) {
-        cout << "*** Inicio de sesion exitoso ***" << endl;
-        clientS();
-      } else {
-        cout << "*** Intento fallido. Usuario o contrasena incorrecta ***" << endl;
-        cout << "Intentos restantes: " << intentos << endl;
-        intentos --;
-        
-      }
     }
-    cout << "*** Acceso Bloqueado. Te quedaste sin intentos ***" << endl;
-
 }
-void log_adm()
+
+void addClt(clt currentClt)
 {
-    string password;
-    string username;
-    int login = 0;
-    do
+    clt[lastReg] = currentClt;
+    lastReg++;
+}
+
+void initClt(int cltPos)    //inicializa los datos del cliente
+{
+    strcpy(clt[cltPos].client_id, "");
+    strcpy(clt[cltPos].client_name, "");
+    strcpy(clt[cltPos].client_lstName, "");
+    strcpy(clt[cltPos].client_mail, "");
+    strcpy(clt[cltPos].client_telf, "");
+}
+
+void showClt(int pos)
+{
+    cout << endl;
+    cout << "ID: " << clt[pos].client_id << endl;
+    cout << "Nombre: " << clt[pos].client_name << endl;
+    cout << "Apellido: " << clt[pos].client_lstName << endl;
+    cout << "E-mail: " << clt[pos].client_mail << endl;
+    cout << "Telefono: " << clt[pos].client_telf << endl;
+}
+
+void searchCltname(char enteredClt_name)
+{
+    int position = -1;
+    for (int i =0; i < lastReg; i++)
     {
-
-        cout << "Bienvenido a VehicleSift " << endl;
-        cout << "Escriba su usuario: " << endl;
-        cin >> username;
-        cout << "Escriba su contraseña: " << endl;
-        cin >> password;
-
-        if (username == "Admin" && password == "Tmolina")
+        if (strcmp(enteredClt_name, clt[i].client_name) == 0)
         {
-
-            cout << "Acceso concedidio" << endl;
-            login = 1;
-            admin();
-            system("pause || read -p 'Presiona Enter para continuar...' -n 1 -s");
-            system("cls || clear");
-        } else {
-            cout << "Acceso denegado..." << endl;
-            cout << "*** Presione enter para volver a introdocir las credenciales ***" << endl;
-            system("pause || read -p 'Presiona Enter para continuar...' -n 1 -s");
-            system("cls || clear");
+            position = i;
+            break;
         }
-
-    } while (login != 1);
-}
-
-bool verification_clt() {
-    return (user == clt.client_id && pass == clt.client_pass);
-}
-
-// end
-
-
-
-int main()
-{
-    login();
-    return 0;
-}
-
-void admin()
-{
-    int op1;
-
-    cout << "Bienvenido Administrador" << endl;
-
-    cout << "***--Opciones--***" << endl;
-    cout << "1. Registrar compras." << endl;
-    cout << "2. clientes." << endl;
-    cout << "3. Recompensas." << endl;
-    cout << "4. Salir" << endl;
-    cin >> op1;
-
-    switch (op1)
-    {
-    case 1:
-        regPurchase();
-        break;
-    case 2:
-        client();
-        break;
-    case 3:
-        rewards();
-        break;
-    case 4:
-        login();
-        break;
-
-    default:
-        cout << "Ingrese opciones validas. Sean de 1-3..." << endl;
-        break;
     }
+    return position;
 }
 
-void regPurchase()
+void searchCltlstname(char enteredClt_lstName)
 {
-
-}
-void client()
-{
-
-}
-void rewards()
-{
-
-}
-
-void clientS()
-{
-    int op2;
-
-    cout << "Bienvenido Usuario1" << endl;
-    cout << "***--Opciones--***" << endl;
-    cout << "1. Canjear puntos." << endl;
-    cout << "2. Consultar puntos." << endl;
-    cout << "3. Historial de compra." << endl;
-    cout << "4. Salir." << endl;
-    cin >> op2;
-
-    switch (op2)
+    int position = -1;
+    for (int i =0; i < lastReg; i++)
     {
-    case 1:
-        redeem();
-        break;
-    case 2:
-        checkPts();
-        break;
-    case 3:
-        record();
-        break;
-    case 4:
-        login();
-        break;
-
-    default:
-        cout << "Ingrese opciones validas. Sean de 1-3.." << endl;
-        break;
+        if (strcmp(enteredClt_lstName, clt[i].client_lstName) == 0)
+        {
+            position = i;
+            break;
+        }
     }
+    return position;
 }
 
-void redeem()
+int searchCltId(char enteredClt_id)
 {
-
+    int position = -1;
+    for (int i =0; i < lastReg; i++)
+    {
+        if (strcmp(enteredClt_id, clt[i].client_id) == 0)
+        {
+            position = i;
+            break;
+        }
+    }
+    return position;
 }
-void checkPts()
-{
 
+void searchCltmail(char enteredClt_mail)
+{
+    int position = -1;
+    for (int i =0; i < lastReg; i++)
+    {
+        if (strcmp(enteredClt_mail, clt[i].client_mail) == 0)
+        {
+            position = i;
+            break;
+        }
+    }
+    return position;
 }
-void record()
-{
 
+int searchCltelf(char enteredClt_telf)
+{
+    int position = -1;
+    for (int i =0; i < lastReg; i++)
+    {
+        if (strcmp(enteredClt_telf, clt[i].client_telf) == 0)
+        {
+            position = i;
+            break;
+        }
+    }
+    return position;
 }

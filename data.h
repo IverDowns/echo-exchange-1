@@ -1,23 +1,16 @@
 #ifndef DATA_H
 #define DATA_H
 
+using namespace std;
 #define MAX 100
-
-struct accounts {
-    struct client;
-    int admin_id = 00017;
-    const char* adm_pass = "admPass007";
-}acsts;
-
 
 struct cliente {
     char client_name[20];
-    char client_pass;
+    char client_lstName[20]
     int client_id;
     char client_mail;
     char client_telf;
-}clt;
- 
+}clt[MAX];
 
 struct reg_compra {
     int cmpr_id;
@@ -46,6 +39,6 @@ struct gift {
     char gft_name;
     int gft_pts;
 }gft;
- 
+
 #endif
 
